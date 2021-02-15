@@ -5,6 +5,12 @@ $password = null;
 $success = false;
 $error = false;
 
+//---
+?><pre style="color: white"><?
+//print_r($_GET);
+?></pre><?
+//---
+
 function logIn($login, $password, $connect)
 {
 
@@ -40,8 +46,8 @@ if(empty($_SESSION['join'])){
 ?>
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    	<tr>
-        	<td class="left-collum-index">
+    <tr>
+      <td class="left-collum-index">
 				<h1><?=head($menu) ?></h1>
 				<h4>Этот сайт использует cookie.</h4>
 				<p>Добрый день. Это учебный проект, он находится в процессе разработки и наполнения. </p>
@@ -55,51 +61,91 @@ if(empty($_SESSION['join'])){
 				
 				<div class="project-folders-menu">
 					<ul class="project-folders-v">
-    					<li class="project-folders-v-active"><a href="/?login=yes">Авторизация</a></li>
-    					<li><a href="#">Регистрация</a></li>
-    					<li><a href="#">Забыли пароль?</a></li>
+    					<li class="<?=($_GET['auth'] == '') ? 'project-folders-v-active' : ''?>"><a href="/?login=yes">Авторизация</a></li>
+    					<li class="<?=($_GET['auth'] == 'reg') ? 'project-folders-v-active' : ''?>"><a href="/?login=yes&auth=reg">Регистрация</a></li>
+    					<li class="<?=($_GET['auth'] == 'forgot') ? 'project-folders-v-active' : ''?>"><a href="/?login=yes&auth=forgot">Забыли пароль?</a></li>
 					</ul>
 				    <div class="clearfix"></div>
 				</div>
                 
 				<div class="index-auth">
-                    <?php if ($success) {?> 
-                            <?php include $_SERVER['DOCUMENT_ROOT'] . '/include/success.php' ?>
-                    <?php } else { ?>
-                        <?php if ($error) {?>
-                                <?php include $_SERVER['DOCUMENT_ROOT'] . '/include/error.php' ?> 
-                        <?php } ?>
-                        <?php if (isset($_GET['login']) && $_GET['login'] == 'yes') { ?>
-                            <form action="" method="post">
-        						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-        							<tr>
-        								<td class="iat" <?= !empty($_COOKIE['login']) ? 'hidden' : '' ?>>
-                                            <label for="login_id">Ваш e-mail:</label>
-                                            <input id="login_id" size="30" name="login" value="<?= htmlspecialchars($_POST['login'] ?? ($_COOKIE['login'] ?? ''));  ?>">
-                                        </td>
-        							</tr>
-        							<tr>
-        								<td class="iat">
-                                            <label for="password_id">Ваш пароль:</label>
-                                            <input id="password_id" size="30" name="password" type="password" value="<?= htmlspecialchars($_POST['password'] ?? '');  ?>">
-                                        </td>
-        							</tr>
-        							        							<tr>
-        								<td class="iat" <?= !empty($_COOKIE['login']) ? '' : 'hidden' ?>>
-                                            <a href="/?cookie=del">Сменить пользователя</a>
-                                        </td>
-        							</tr>
-        							<tr>
-        								<td><input type="submit" value="Войти"></td>
-        							</tr>
-        						</table>
-                            </form>
-                        <?php } ?>
-                    <?php } ?>
+          <?php if ($success) {?> 
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/include/success.php' ?>
+          <?php } else { ?>
+            <?php if ($error) {?>
+                <?php include $_SERVER['DOCUMENT_ROOT'] . '/include/error.php' ?> 
+            <?php } ?>
+            <?php if (isset($_GET['login']) && $_GET['login'] == 'yes') { ?>
+
+              <?php switch ($_GET['auth']): 
+                case 'reg': ?>
+
+                <form action="" method="post">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td class="iat">
+                            <label for="login_id">Ваше имя/e-mail:</label>
+                            <input id="login_id" size="30" name="login" value="">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="iat">
+                            <label for="password_id">Ваш пароль:</label>
+                            <input id="password_id" size="30" name="password" type="password" value="">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="iat">
+                            <label for="password_id">Повторите пароль:</label>
+                            <input id="password_id" size="30" name="password" type="password" value="">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><input type="submit" value="Отправить"></td>
+                      </tr>
+                    </table>
+                </form>
+
+                <?php  break; ?>
+                <?php case 'forgot': ?>
+
+                <p>Скоро здесь что-то будет)</p>
+
+                <?php  break; ?>
+                <?php default:?>
+
+                  <form action="" method="post">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td class="iat" <?= !empty($_COOKIE['login']) ? 'hidden' : '' ?>>
+                            <label for="login_id">Ваш e-mail:</label>
+                            <input id="login_id" size="30" name="login" value="<?= htmlspecialchars($_POST['login'] ?? ($_COOKIE['login'] ?? ''));  ?>">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="iat">
+                            <label for="password_id">Ваш пароль:</label>
+                            <input id="password_id" size="30" name="password" type="password" value="<?= htmlspecialchars($_POST['password'] ?? '');  ?>">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="iat" <?= !empty($_COOKIE['login']) ? '' : 'hidden' ?>>
+                            <a href="/?cookie=del">Сменить пользователя</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><input type="submit" value="Войти"></td>
+                      </tr>
+                    </table>
+                </form>
+
+              <?php endswitch ?>
+            <?php } ?>
+          <?php } ?>
 				</div>
 			
 			</td>
-        </tr>
+    </tr>
 
     </table>
     
