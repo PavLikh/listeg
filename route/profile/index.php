@@ -4,7 +4,8 @@
         	<td class="left-collum-index">
 				<p>Практика работы с БД</p>
 				<h1><?=head($menu) ?></h1>
-				<?php	
+				<span>Скоро здесь будет страница управлением профиля</span>
+		<!--		<?php	
 
 					$login = $_COOKIE['login'];
 					$result = mysqli_query(
