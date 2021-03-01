@@ -43,24 +43,27 @@ if(empty($_SESSION['join'])){
                 
       }
     } else if ($_POST['reg']) {
-      include $_SERVER['DOCUMENT_ROOT'] . '/include/registr.php';
+      
       if (empty($_POST['login']) || empty($_POST['password']) || empty($_POST['password_repeat']) ) {
             $error = true;            
       } else if ($_POST['password'] != $_POST['password_repeat']) {
             $error = true;
-      } else if ($checkLogin) {
-            $error = true;
-      } else if (!$log) {
-            $error = true;
       } else {
-            $login = trim($_POST['login']);
-            $password = md5(trim($_POST['password']));
-            $success = logIn($login, $password, $connect);
-            if ($success) {
-                $_SESSION['join'] = true;
-                setcookie('login', $login, time() + 60 *60 * 24 * 30, '/');
-                Header("Location: /");
-            }            
+            include $_SERVER['DOCUMENT_ROOT'] . '/include/registr.php'; 
+            if ($checkLogin) {
+                  $error = true;
+            } else if (!$log) {
+                  $error = true;
+            } else {
+                  $login = trim($_POST['login']);
+                  $password = md5(trim($_POST['password']));
+                  $success = logIn($login, $password, $connect);
+                  if ($success) {
+                      $_SESSION['join'] = true;
+                      setcookie('login', $login, time() + 60 *60 * 24 * 30, '/');
+                      Header("Location: /");
+                  }            
+            }
       }
     }
   }
