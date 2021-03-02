@@ -43,13 +43,13 @@ if(empty($_SESSION['join'])){
                 
       }
     } else if ($_POST['reg']) {
-      
+      include $_SERVER['DOCUMENT_ROOT'] . '/include/registr.php';
       if (empty($_POST['login']) || empty($_POST['password']) || empty($_POST['password_repeat']) ) {
             $error = true;            
       } else if ($_POST['password'] != $_POST['password_repeat']) {
             $error = true;
       } else {
-            include $_SERVER['DOCUMENT_ROOT'] . '/include/registr.php'; 
+            
             if ($checkLogin) {
                   $error = true;
             } else if (!$log) {
