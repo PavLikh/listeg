@@ -97,7 +97,7 @@ $data = [
 	'name' => $_POST['login'],
 	'mail' => ($_POST['mail'] ? $_POST['mail'] : null),
 	'phone' => ($_POST['phone'] ? $_POST['phone'] : null),
-	'password' => ($_POST['password'] == $_POST['password_repeat'] ? md5(trim($_POST['password'])) : null),
+	'password' => ($_POST['password'] != '' && $_POST['password'] == $_POST['password_repeat'] ? md5(trim($_POST['password'])) : null),
 	//'recieve_notice' => ($_POST['recieve_notice'] ? $_POST['recieve_notice'] : ''),
 ];// $data это просто $_POST записано по ключам массива для понимания
 
