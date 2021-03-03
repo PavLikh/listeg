@@ -3,6 +3,7 @@
 /web.config
 /phpinfo.php
 /readme.txt
+/db.php
 *.log
 *.tar.gz
 *.tar

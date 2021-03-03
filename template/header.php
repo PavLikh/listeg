@@ -16,9 +16,10 @@ if (empty($_SESSION['join'])){
     }
 }
 
+include $_SERVER['DOCUMENT_ROOT'] . '/include/db.php';
 $host = 'localhost';
-$user = 'ct96865_listeg';
-$pass = 'qwe1as';
+//$user = '';
+//$pass = '';
 $dbname = 'ct96865_listeg';
 
 

@@ -1,18 +1,16 @@
 <?php
 
 //$host = 'localhost';
-//$user = 'ct96865_listeg';
-//$pass = 'qwe1as';
 //$dbname = 'ct96865_listeg';
 
 class QueryBuilder
 {
 	public $pdo;
 
-	function __construct()
+	function __construct($user, $pass)
 	{
 		// 1. Connect
-		$this->pdo = new PDO("mysql:host=localhost; dbname=ct96865_listeg", "ct96865_listeg", "qwe1as");
+		$this->pdo = new PDO("mysql:host=localhost; dbname=ct96865_listeg", "$user", "$pass");
 	}
 
 	// List for everything
@@ -39,14 +37,7 @@ class QueryBuilder
 		$placeholders = ":".implode(', :', $keys);
 
 		$sql = "INSERT INTO $table ($stringOfKeys) VALUES($placeholders)"; //передали метки :title...
-		//$sql = "INSERT INTO users (name) VALUES ('name')";
-		//print_r($sql);
 		$statement = $this->pdo->prepare($sql);
-		//$statement->bindParam(":title", $_POST["title"]); // привязали метки bindParam
-		//$statement->bindParam(":content", $_POST["content"]);
-		//$statement->execute();
-		//$statement->bindParam(":name", 'name19');
-		//$statement->bindParam(":password", 'pass');
 		$statement->execute($data); //чтобы не использовать bindParam для каждой метки
 		$count = $statement->rowCount();
 		return $count;
@@ -89,7 +80,7 @@ class QueryBuilder
 
 }
 
-$db = new QueryBuilder;
+$db = new QueryBuilder($user, $pass);
 //$userById = $db->getOne("users", '5');
 
 $data = [
@@ -104,11 +95,4 @@ $data = [
 $checkLogin = $db->checkLogin("users", $data['name']);
 $log = $db->store("users", $data);
 
-
-
-//$tasks = $db->all("users");
-//$last = $db->getLast("users");
 ?>
-
-
-
